@@ -6,7 +6,7 @@ VENV ?= ${MK_DIR}
 
 ## Variable setup.
 # Executable paths
-PY_BIN:=$(realpath ${VENV}/bin)
+PY_BIN:=${VENV}/bin
 
 PIP:=${PY_BIN}/pip
 PYTHON:=${PY_BIN}/python
