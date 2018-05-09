@@ -59,17 +59,6 @@ clean:
 	# If it's not in Git, it doesn't exist.
 	@git clean -xfd
 	
-# Reset
-.PHONY: reset
-reset:
-	-git reset HEAD --hard
-	${MAKE} clean
-	
-# Development Sprint
-.PHONY: sprint
-sprint:
-	$(shell $(realpath ${MK_DIR}/.mk_inc/sprintcommit.sh))
-
 # Debug
 .PHONY: debug
 debug:
