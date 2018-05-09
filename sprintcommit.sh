@@ -12,7 +12,7 @@ git fetch --all --tags --prune --verbose
 git commit --all --message "`whoami`@`hostname`: `date --universal`"
 
 # Push
-git push --all --tags --verbose
+git push --all --verbose
 
 # Sleep for 15 minutes
 echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
