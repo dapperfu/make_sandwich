@@ -1,23 +1,20 @@
 #!/bin/sh
 # A tool for commiting code changes during 'in the zone' sprints.
 
-# Development sprint branch
-BRANCH="development-sprint/`whoami`/`date +%Y-%b`"
+COMMIT_TIME=${1:-300}
 
 while [ 1 ];
 do
-# Checkout development branch
-git checkout -b $BRANCH
-
-# Pull
-git pull
+# Fetch everything
+git fetch --all --tags --prune --verbose
 
 # A commit.
-git commit -a -m "`date`"
+git commit --all --message "`whoami`@`hostname`: `date --universal`"
 
-# Push upstream
-git push --set-upstream origin $BRANCH
+# Push
+git push --all --tags --verbose
 
 # Sleep for 15 minutes
-sleep 900
+echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
+sleep ${COMMIT_TIME}
 done
