@@ -15,6 +15,8 @@ git commit --all --message "`whoami`@`hostname`: `date --universal`"
 git push --all --verbose
 
 # Sleep for 15 minutes
+echo
 echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
+echo 
 sleep ${COMMIT_TIME}
 done
