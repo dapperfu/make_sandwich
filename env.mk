@@ -65,6 +65,4 @@ debug:
 	@$(info $${MAKEFILE_LIST}=${MAKEFILE_LIST})
 	@$(info $${MK_DIR}=${MK_DIR})
 	@$(info $${PROJ}=${PROJ})
-	@$(info $${OSNAME}=${OSNAME})
-	@$(info $${OSARCH}=${OSARCH})
 	@$(info $${MK_USER}=${MK_USER})

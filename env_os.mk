@@ -1,7 +1,10 @@
 ### OS Specific Setup
-OSNAME :=
-OSARCH :=
 
+# Reset
+OSNAME:=
+OSARCH:=
+
+# Windows
 ifeq (${OS},Windows_NT)
 	OSNAME:=WIN32
 	ifeq (${PROCESSOR_ARCHITECTURE},AMD64)
@@ -11,19 +14,29 @@ ifeq (${OS},Windows_NT)
 		OSARCH := IA32
 	endif
 else
+	# name of the operating system implementation
 	UNAME_S := $(shell uname -s)
+	# machine processor architecture 
+	UNAME_P := $(shell uname -p)
+	
+	# Convert uname output to OSNAME
 	ifeq (${UNAME_S},Linux)
 		OSNAME := LINUX
+	endif
+	ifeq (${UNAME_S},FreeBSD)
+		OSNAME := FREEBSD
 	endif
 	ifeq (${UNAME_S},Darwin)
 		OSNAME := OSX
 	endif
 		
-	UNAME_P := $(shell uname -p)
+	# Convert uname output to OSARCH
 	ifeq (${UNAME_P},x86_64)
-		OSNAME := AMD64
+		OSARCH := AMD64
 	endif
-	
+	ifeq (${UNAME_P},amd64)
+		OSARCH := AMD64
+	endif
 	ifneq ($(filter %86,${UNAME_P}),)
 		OSARCH := IA32
 	endif
@@ -34,4 +47,5 @@ endif
 
 .PHONY: debug.os
 debug.os:
-	@echo ${OSFLAG}
+	@$(info $${OSNAME}=${OSNAME})
+	@$(info $${OSARCH}=${OSARCH})
