@@ -14,7 +14,7 @@ ubuntu: ${LSB_RELEASE}
 ${LSB_RELEASE}:
 	grep ${LSB_RELEASE} requirements-${LSB_ID}.txt | cut -f1 -d# | xargs apt-get install -y
 
-.PHONY: debug_host
-debug_host:
+.PHONY: debug.host
+debug.host:
 	@$(info $${LSB_RELEASE}=${LSB_RELEASE})
 	@$(info $${LSB_ID}=${LSB_ID})

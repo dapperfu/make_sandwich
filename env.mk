@@ -2,7 +2,7 @@
 
 ## Variables
 # Makefile directory
-MK_DIR = $(realpath $(dir $(firstword $(MAKEFILE_LIST))))
+MK_DIR = $(realpath $(dir $(firstword ${MAKEFILE_LIST})))
 # Project name
 PROJ ?= $(notdir ${MK_DIR})
 # Hostname
@@ -62,6 +62,7 @@ clean:
 # Debug
 .PHONY: debug
 debug:
+	@$(info $${MAKEFILE_LIST}=${MAKEFILE_LIST})
 	@$(info $${MK_DIR}=${MK_DIR})
 	@$(info $${PROJ}=${PROJ})
 	@$(info $${OSNAME}=${OSNAME})

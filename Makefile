@@ -6,9 +6,10 @@
 null:
 	@$(error No Default Target).
 
-# Toolchain Includes
+## make_sandwich includes
+# https://github.com/jed-frey/make_sandwich
+# 
 include .mk_inc/env.mk
-include .mk_inc/host_env.mk
-include .mk_inc/python.mk
-include .mk_inc/arduino.mk
-include .mk_inc/lint.mk
+include .mk_inc/env_host.mk
+include .mk_inc/env_python.mk
+include .mk_inc/env_arduino.mk

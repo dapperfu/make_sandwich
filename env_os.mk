@@ -1,5 +1,4 @@
 ### OS Specific Setup
-
 OSNAME :=
 OSARCH :=
 
@@ -33,6 +32,6 @@ else
 	endif
 endif
 
-.PHONY: debug_os
-debug_os:
-	@echo $(OSFLAG)
+.PHONY: debug.os
+debug.os:
+	@echo ${OSFLAG}

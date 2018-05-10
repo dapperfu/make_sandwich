@@ -36,5 +36,5 @@ arduino_make: arduino_make_${ARDUINO_MK_VERSION}.tar.gz
 	
 ## Phony Targets
 # Targets that don't actually exist.
-.PHONY: arduino_env
-arduino_env: arduino arduino_make
+.PHONY: env.arduino
+env.arduino: arduino arduino_make
