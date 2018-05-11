@@ -29,15 +29,12 @@ git.develop:
 	
 .PHONY: git.mkdevbranch
 git.mkdevbranch:
-	git checkout -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
-	git push
-
+	-git checkout --track -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
+	${MAKE} git.origin
+	git commit -am "${USER} started ${PROJ} development"
+	git push origin
+	
 ## Development Sprint
 .PHONY: sprint
 sprint:
 	$(shell $(realpath ${MK_DIR}/.mk_inc/sprintcommit.sh))
-## Reset
-.PHONY: reset
-reset:
-	-git reset HEAD --hard
-	${MAKE} clean
