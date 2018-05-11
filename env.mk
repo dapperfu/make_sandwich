@@ -32,3 +32,6 @@ include ${SANDWICH_DIR}/env_arduino.mk
 include ${SANDWICH_DIR}/tool_git.mk
 include ${SANDWICH_DIR}/tool_lint.mk
 include ${SANDWICH_DIR}/tool_jenkins.mk
+
+# magnum opus
+include ${SANDWICH_DIR}/sandwich.mk
