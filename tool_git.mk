@@ -1,19 +1,23 @@
 ## Variables
 
-## Commit
-.PHONY: commit
-commit:
+## Targets
+# Commit - Git Commit
+#
+# Fetches all remotes before creating commit to avoid issues.
+# Creates a commit. Launches EDITOR.
+# Pushes to all remotes.
+.PHONY: git.commit
+git.commit:
 	git fetch --all --verbose
-	git commit --all --long
+	git commit --all
 	git push --all
 
-##
-.PHONY: git.origin
-git.origin:
-	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
-	git remote --verbose
-
-##
+# Heads - List all heads
+#
+# Keep track of all development with verbose printing of the heads for:
+# - Local (refs/heads)
+# - Tags (/refs/tags)
+# - Remote (/refs/remotes/)
 .PHONY: git.heads
 git.heads:
 	@echo --- Head Commits ---
@@ -23,18 +27,49 @@ git.heads:
 	@echo --- Remote Commits ---
 	@git for-each-ref --sort=committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 
+# Develop - Begin development of this project.
+#
+# Start development of this project at this point.
+# Creates a development branch on all submodules.
+# Creates a development branch for this project.
+#
+# See: ```git.mkdevbranch```
 .PHONY: git.develop
 git.develop:
 	git submodule foreach --recursive make git.mkdevbranch PROJ=${PROJ} USER=${USER}
-	
-.PHONY: git.mkdevbranch
-git.mkdevbranch:
-	-git checkout --track -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
-	${MAKE} git.origin
+	-git checkout --track -b development/${USER}/${DATE_Y_b}
+	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	git commit -am "${USER} started ${PROJ} development"
 	git push origin
+
+# mkdevbranch - Create a development branch for this git repository.
+# 1. Sets the remote push URL to the ssh version. (Tested on GitHub)
+# 2. Creates a branch with the following structure:
+#		development/${USER}/submodule/${PROJ}/${DATE_Y_b}
+# 3. Commits all existing changes wih the following commit message:
+#		${USER} started ${PROJ} development
+# 4. Pushes to the origin.
+
+.PHONY: git.mkdevbranch
+git.mkdevbranch:
+	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
+	-git checkout --track -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
+	git commit -am "${USER} started ${PROJ} development"
+	git push origin
+
+# Sync - Sync project and all submodules with remotes
+
+.PHONY: git.sync
+git.sync:
+	git fetch --jobs 8 --recurse-submodules --all --tags --progress
+	
+.PHONY: env.git
+env.git:
+	git config user.email "${USER}@${HOST}-${OSNAME}"
+	git config user.name "${USER}"
+	git config core.editor "geany -imnst"
 	
 ## Development Sprint
-.PHONY: sprint
+.PHONY: git.sprint
 sprint:
 	$(shell $(realpath ${MK_DIR}/.mk_inc/sprintcommit.sh))
