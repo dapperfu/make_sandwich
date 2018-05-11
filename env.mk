@@ -21,9 +21,12 @@ debug:
 	@$(info $${MK_DIR}='${MK_DIR}')
 	@$(info $${SANDWICH_DIR}='${SANDWICH_DIR}')
 	@$(info $${PROJ}='${PROJ}')
+	@$(info $${USER}='${USER}')
 
 # Variables
 include ${SANDWICH_DIR}/var_os.mk
+include ${SANDWICH_DIR}/var_dates.mk
+
 # Environments
 include ${SANDWICH_DIR}/env_host.mk
 include ${SANDWICH_DIR}/env_python.mk

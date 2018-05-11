@@ -1,3 +1,5 @@
+## Variables
+
 ## Commit
 .PHONY: commit
 commit:
@@ -23,8 +25,12 @@ git.heads:
 
 .PHONY: git.develop
 git.develop:
-	git submodule foreach --recursive pwd
-	# git checkout -b development/submodule/
+	git submodule foreach --recursive make git.mkdevbranch PROJ=${PROJ} USER=${USER}
+	
+.PHONY: git.mkdevbranch
+git.mkdevbranch:
+	git checkout -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
+	git push
 
 ## Development Sprint
 .PHONY: sprint

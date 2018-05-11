@@ -14,6 +14,7 @@ ifeq (${OS},Windows_NT)
 		OSARCH:=IA32
 	endif
 else
+	USER:=$(shell whoami)
 	HOST:=$(shell hostname)
 	# name of the operating system implementation
 	UNAME_S:=$(shell uname -s)
