@@ -31,3 +31,4 @@ include ${SANDWICH_DIR}/env_arduino.mk
 # Tools
 include ${SANDWICH_DIR}/tool_git.mk
 include ${SANDWICH_DIR}/tool_lint.mk
+include ${SANDWICH_DIR}/tool_jenkins.mk
