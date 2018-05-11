@@ -37,7 +37,7 @@ git.heads:
 .PHONY: git.develop
 git.develop:
 	git submodule foreach --recursive make git.mkdevbranch PROJ=${PROJ} USER=${USER}
-	-git checkout --track -b development/${USER}/${DATE_Y_b}
+	-git checkout -b development/${USER}/${DATE_Y_b}
 	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	git commit -am "${USER} started ${PROJ} development"
 	git push origin
