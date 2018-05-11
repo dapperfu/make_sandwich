@@ -40,7 +40,7 @@ git.develop:
 	-git checkout -b development/${USER}/${DATE_Y_b}
 	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	git commit -am "${USER} started ${PROJ} development"
-	git push origin
+	git push --set-upstream origin
 
 # mkdevbranch - Create a development branch for this git repository.
 # 1. Sets the remote push URL to the ssh version. (Tested on GitHub)
@@ -65,6 +65,7 @@ git.sync:
 	
 .PHONY: env.git
 env.git:
+	git config push.default simple
 	git config user.email "${USER}@${HOST}-${OSNAME}"
 	git config user.name "${USER}"
 	git config core.editor "geany -imnst"
