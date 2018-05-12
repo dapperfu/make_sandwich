@@ -21,6 +21,7 @@ git.commit:
 # - Remote (/refs/remotes/)
 .PHONY: git.heads
 git.heads:
+	@echo {{{ ${PROJ} }}}
 	@echo --- Head Commits ---
 	@git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	@echo --- Tag Commits ---
@@ -53,7 +54,6 @@ git.develop:
 
 .PHONY: git.mkdevbranch
 git.mkdevbranch:
-	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	-git checkout --track -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
 	git commit -am "${USER} started ${PROJ} development"
 	git push origin
@@ -84,4 +84,8 @@ git.sprintcommit:
 	
 .PHONY: git.xxx
 git.xxx:
+	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
+	git submodule foreach --recursive "${MAKE} env.git"
+	git submodule foreach --recursive "${MAKE} env.git"
+	git submodule foreach --recursive git fetch --all --verbose
 	git submodule foreach --recursive "${MAKE} git.sprintcommit COMMIT_TIME=0"
