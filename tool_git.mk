@@ -80,7 +80,7 @@ git.sprint:
 	${MAKE} git.sprintcommit COMMIT_TIME=300
 	
 .PHONY: git.sprintcommit
-git.sprintcommit:
+git.sprintcommit: env.git
 	-${SANDWICH_DIR}/sprintcommit.sh ${COMMIT_TIME}
 
 	
