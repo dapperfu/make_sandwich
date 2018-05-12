@@ -1,4 +1,5 @@
 ## Variables
+COMMIT_TIME?=0
 
 ## Targets
 # Commit - Git Commit
@@ -58,7 +59,8 @@ git.mkdevbranch:
 	git push origin
 
 # Sync - Sync project and all submodules with remotes
-
+#
+# Sync all submodules
 .PHONY: git.sync
 git.sync:
 	git fetch --jobs 8 --recurse-submodules --all --tags --progress
@@ -72,5 +74,11 @@ env.git:
 	
 ## Development Sprint
 .PHONY: git.sprint
-sprint:
-	$(shell $(realpath ${MK_DIR}/.mk_inc/sprintcommit.sh))
+git.sprint:
+	${MAKE} git.sprintcommit COMMIT_TIME=300
+	git submodule foreach --recursive ${MAKE} git.sprintcommit COMMIT_TIME=0
+	
+.PHONY: git.sprintcommit
+git.sprintcommit:
+	$(shell $(realpath ${MK_DIR}/.mk_inc/sprintcommit.sh ${COMMIT_TIME}))
+

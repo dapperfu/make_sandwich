@@ -1,8 +1,8 @@
 #!/bin/sh
 # A tool for commiting code changes during 'in the zone' sprints.
 
-# Default commit frequency every 300 seconds unless otherwise given.
-COMMIT_TIME=${1:-300}
+# Default commit frequency of 0, only commit once.
+COMMIT_TIME=${1:-0}
 
 # Until stop.
 while [ 1 ];
@@ -26,6 +26,10 @@ echo --- Pushing ---
 echo 
 git push --all --verbose
 
+# For recursion.
+if [ "${COMMIT_TIME}" -eq "0" ]; then
+   exit 0
+fi
 # Sleep.
 echo
 echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
