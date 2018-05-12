@@ -3,6 +3,9 @@
 # Reset
 OSNAME:=
 OSARCH:=
+# Config
+LSB_RELEASE=$(shell lsb_release --short --release)
+LSB_ID=$(shell lsb_release --short --id)
 
 # Windows
 ifeq (${OS},Windows_NT)
@@ -14,8 +17,10 @@ ifeq (${OS},Windows_NT)
 		OSARCH:=IA32
 	endif
 else
+	# Yay not Windows.
 	USER:=$(shell whoami)
 	HOST:=$(shell hostname)
+
 	# name of the operating system implementation
 	UNAME_S:=$(shell uname -s)
 	# machine processor architecture 
@@ -24,6 +29,8 @@ else
 	# Convert uname output to OSNAME
 	ifeq (${UNAME_S},Linux)
 		OSNAME:=LINUX
+		LSB_RELEASE:=$(shell lsb_release --short --release)
+		LSB_ID:=$(shell lsb_release --short --id)
 	endif
 	ifeq (${UNAME_S},FreeBSD)
 		OSNAME:=FREEBSD

@@ -1,10 +1,6 @@
 ### Host Environment Setup.
 # Bootstrap Host Environment.
 
-# Config
-LSB_RELEASE=$(shell lsb_release --short --release)
-LSB_ID=$(shell lsb_release --short --id)
-
 # Targets
 
 # env.host - Setup the host environment.
