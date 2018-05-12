@@ -68,11 +68,12 @@ git.sync:
 	
 .PHONY: env.git
 env.git:
+	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	git config push.default simple
 	git config user.email "${USER}@${HOST}-${OSNAME}"
 	git config user.name "${USER}"
 	git config core.editor "geany -imnst"
-	
+
 ## Development Sprint
 .PHONY: git.sprint
 git.sprint:
