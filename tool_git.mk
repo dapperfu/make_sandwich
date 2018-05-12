@@ -21,13 +21,16 @@ git.commit:
 # - Remote (/refs/remotes/)
 .PHONY: git.heads
 git.heads:
-	@echo {{{ ${PROJ} }}}
+	@echo {{{{ ${PROJ} }}}}
 	@echo --- Head Commits ---
 	@git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	@echo --- Tag Commits ---
 	@git for-each-ref --sort=committerdate refs/tags/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	@echo --- Remote Commits ---
 	@git for-each-ref --sort=committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+	@echo
+	@echo
+	@echo
 
 # Develop - Begin development of this project.
 #
