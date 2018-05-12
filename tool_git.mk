@@ -80,7 +80,8 @@ git.sprint:
 .PHONY: git.sprintcommit
 git.sprintcommit:
 	-${SANDWICH_DIR}/sprintcommit.sh ${COMMIT_TIME}
+
 	
 .PHONY: git.xxx
 git.xxx:
-	git submodule foreach --recursive "${MAKE} git.sprintcommit COMMIT_TIME=${COMMIT_TIME}"
+	git submodule foreach --recursive "${MAKE} git.sprintcommit COMMIT_TIME=0"
