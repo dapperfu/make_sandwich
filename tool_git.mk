@@ -76,9 +76,9 @@ env.git:
 .PHONY: git.sprint
 git.sprint:
 	${MAKE} git.sprintcommit COMMIT_TIME=300
-	git submodule foreach --recursive ${MAKE} git.sprintcommit COMMIT_TIME=0
 	
 .PHONY: git.sprintcommit
 git.sprintcommit:
-	$(shell $(realpath ${MK_DIR}/.mk_inc/sprintcommit.sh ${COMMIT_TIME}))
+	-$(shell $(realpath ${SANDWICH_DIR}/sprintcommit.sh ${COMMIT_TIME}))
+	git submodule foreach --recursive ${MAKE} git.sprintcommit COMMIT_TIME=0
 
