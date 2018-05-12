@@ -82,6 +82,7 @@ git.sprint:
 .PHONY: git.sprintcommit
 git.sprintcommit: env.git
 	-${SANDWICH_DIR}/sprintcommit.sh ${COMMIT_TIME}
+	git submodule foreach --recursive "make git.sprintcommit"
 
 	
 .PHONY: git.xxx
