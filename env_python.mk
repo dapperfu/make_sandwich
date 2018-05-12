@@ -25,6 +25,8 @@ ${PYTHON}: requirements.txt
 	
 .PHONY: test.python
 test.python:
+	${MAKE} clean
+	${MAKE} env.python
 	${PY_BIN}/pytest tests/
 	
 requirements.txt:
