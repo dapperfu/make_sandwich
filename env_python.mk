@@ -23,5 +23,9 @@ ${PYTHON}: requirements.txt
 	${PIP} install --upgrade ${BASE_MODULES}
 	${PIP} install --upgrade --requirement ${<}
 	
+.PHONY: test.python
+test.python:
+	${PY_BIN}/pytest tests/
+	
 requirements.txt:
 	$(file >${@},)
