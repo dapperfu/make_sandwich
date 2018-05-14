@@ -22,6 +22,7 @@ git.commit:
 .PHONY: git.heads
 git.heads:
 	@echo --- Project: "${PROJ}" ---
+	@git remote --verbose
 	@echo --- Head Commits ---
 	@git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	@echo --- Tag Commits ---
@@ -29,7 +30,7 @@ git.heads:
 	@echo --- Remote Commits ---
 	@git for-each-ref --sort=committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	@echo
-	git submodule foreach --recursive "${MAKE} git.heads"
+	git submodule foreach "${MAKE} git.heads"
 # Develop - Begin development of this project.
 #
 # Start development of this project at this point.
