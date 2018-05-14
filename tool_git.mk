@@ -67,6 +67,7 @@ git.mkdevbranch:
 git.sync:
 	git fetch --jobs 8 --recurse-submodules --all --tags --progress
 	git pull --jobs 8 --recurse-submodules --all --tags --progress
+	git push --jobs 8 --recurse-submodules --all --tags --progress
 	
 .PHONY: env.git
 env.git:
