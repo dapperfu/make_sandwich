@@ -1,4 +1,6 @@
 # Config
+ENVS+=env.python
+ENVS+=env.arduino
 
 ## Targets
 # Do nothing.

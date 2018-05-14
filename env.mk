@@ -15,6 +15,9 @@ clean:
 	# If it's not in Git, it doesn't exist.
 	@git clean -xfd
 	
+.PHONY: env
+env: ${ENVS}
+	
 # Debug
 .PHONY: debug
 debug: debug.host debug.os
