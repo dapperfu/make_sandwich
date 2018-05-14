@@ -17,7 +17,7 @@ clean:
 	
 # Debug
 .PHONY: debug
-debug:
+debug: debug.host debug.os
 	@$(info $${MK_DIR}='${MK_DIR}')
 	@$(info $${SANDWICH_DIR}='${SANDWICH_DIR}')
 	@$(info $${PROJ}='${PROJ}')
