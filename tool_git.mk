@@ -85,7 +85,6 @@ git.sprint:
 git.sprintcommit: env.git
 	git submodule foreach "make git.sprintcommit PROJ=${PROJ}"
 	-${SANDWICH_DIR}/sprintcommit.sh ${COMMIT_TIME}
-
 	
 .PHONY: git.xxx
 git.xxx:
