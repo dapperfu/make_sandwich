@@ -16,7 +16,7 @@ clean:
 	@git clean -xfd
 	
 .PHONY: env
-env: ${ENVS}
+env: $(addprefix env.,${ENVS})
 	
 # Debug
 .PHONY: debug
