@@ -1,3 +1,8 @@
+# Do nothing.
+.PHONY: null
+null:
+	@$(error No Default Target).
+
 ### Environment Setup.
 
 ## Variables
