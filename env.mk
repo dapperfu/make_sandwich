@@ -1,3 +1,8 @@
+# Do nothing.
+.PHONY: null
+null:
+	@$(error No Default Target).
+
 ### Environment Setup.
 
 ## Variables
@@ -15,9 +20,12 @@ clean:
 	# If it's not in Git, it doesn't exist.
 	@git clean -xfd
 	
+.PHONY: env
+env: $(addprefix env.,${ENVS})
+	
 # Debug
 .PHONY: debug
-debug:
+debug: debug.host debug.os
 	@$(info $${MK_DIR}='${MK_DIR}')
 	@$(info $${SANDWICH_DIR}='${SANDWICH_DIR}')
 	@$(info $${PROJ}='${PROJ}')
