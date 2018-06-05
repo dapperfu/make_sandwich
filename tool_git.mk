@@ -57,7 +57,7 @@ git.develop:
 .PHONY: git.mkdevbranch
 git.mkdevbranch:
 	-git checkout --track -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
-	git commit -am "${USER} started ${PROJ} development"
+	git commit --allow-empty --all --message "${USER} started ${PROJ} development"
 	git push origin
 
 # Sync - Sync project and all submodules with remotes
