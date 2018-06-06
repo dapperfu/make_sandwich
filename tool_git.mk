@@ -58,7 +58,7 @@ git.develop:
 git.mkdevbranch:
 	-git checkout --track -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
 	git commit --allow-empty --all --message "${USER} started ${PROJ} development"
-	git push origin
+	git push --set-upstream origin
 
 # Sync - Sync project and all submodules with remotes
 #
