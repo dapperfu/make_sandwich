@@ -7,7 +7,6 @@ VENV ?= ${MK_DIR}
 ## Variable setup.
 # Executable paths
 PY_BIN:=${VENV}/bin
-
 PIP:=${PY_BIN}/pip
 PYTHON:=${PY_BIN}/python
 
@@ -15,8 +14,8 @@ PYTHON:=${PY_BIN}/python
 # Some projects need wheel to setup.
 BASE_MODULES+=pip setuptools wheel
 
-.PHONY: venv
-venv: ${PYTHON}
+.PHONY: env_python
+env_python: ${PYTHON}
 
 ${PYTHON}: requirements.txt
 	python3 -mvenv ${VENV}
