@@ -14,10 +14,12 @@ PY_BIN:=${VENV}/bin
 PIP:=${PY_BIN}/pip
 PYTHON:=${PY_BIN}/python
 
-## Targets
-.PHONY: env.python
-env.python: ${PYTHON}
+# Base python modules to install before everything else
+# Some projects need wheel to setup.
+BASE_MODULES+=pip setuptools wheel
 
+.PHONY: env_python
+env_python: ${PYTHON}
 ${PYTHON}: requirements.txt
 	python3 -mvenv ${VENV}
 	${PIP} install --upgrade ${BASE_MODULES}
