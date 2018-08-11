@@ -10,6 +10,7 @@ BASE_MODULES+=pip setuptools wheel
 
 ## Variable Setup
 # Executable paths
+HOST_PYTHON?=python3
 PY_BIN:=${VENV}/bin
 PIP:=${PY_BIN}/pip
 PYTHON:=${PY_BIN}/python
@@ -21,7 +22,7 @@ BASE_MODULES+=pip setuptools wheel
 .PHONY: env_python
 env_python: ${PYTHON}
 ${PYTHON}: requirements.txt
-	python3 -mvenv ${VENV}
+	${HOST_PYTHON} -mvenv ${VENV}
 	${PIP} install --upgrade ${BASE_MODULES}
 	${PIP} install --upgrade --requirement ${<}
 	
