@@ -19,8 +19,8 @@ PYTHON:=${PY_BIN}/python
 # Some projects need wheel to setup.
 BASE_MODULES+=pip setuptools wheel
 
-.PHONY: env_python
-env_python: ${PYTHON}
+.PHONY: env.python
+env.python: ${PYTHON}
 ${PYTHON}: requirements.txt
 	${HOST_PYTHON} -mvenv ${VENV}
 	${PIP} install --upgrade ${BASE_MODULES}
