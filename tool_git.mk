@@ -18,9 +18,6 @@ git.fire:
 	@echo '3'
 
 
-
-
-
 # Commit - Git Commit
 #
 # Fetches all remotes before creating commit to avoid issues.
@@ -85,7 +82,7 @@ git.mkdevbranch:
 git.sync:
 	git fetch --jobs 8 --recurse-submodules --all --tags --progress
 	git pull --jobs 8 --recurse-submodules --all --tags --progress
-	git push --jobs 8 --recurse-submodules=on-demand --all --progress
+	git push --recurse-submodules=on-demand --all --progress --porcelain
 
 .PHONY: env.git
 env.git:
