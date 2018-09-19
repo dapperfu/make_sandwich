@@ -3,8 +3,8 @@ COMMIT_TIME?=0
 
 ## Targets
 # Fire - Fire
-.PHONY: fire.git
-fire.git:
+.PHONY: git.fire
+git.fire:
 	@echo '####### ### ######  #######'
 	@echo '#        #  #     # #'
 	@echo '#        #  #     # #'
@@ -12,6 +12,14 @@ fire.git:
 	@echo '#        #  #   #   #'
 	@echo '#        #  #    #  #'
 	@echo '#       ### #     # #######'
+	${MAKE} git.sprintcommit COMMIT_MSG="FIRE"
+	@echo 'Please call: 0118 999 881 999 119 725'
+	@sleep 5
+	@echo '3'
+
+
+
+
 
 # Commit - Git Commit
 #
