@@ -66,7 +66,7 @@ git.mkdevbranch:
 git.sync:
 	git fetch --jobs 8 --recurse-submodules --all --tags --progress
 	git pull --jobs 8 --recurse-submodules --all --tags --progress
-	git push --recurse-submodules=on-demand --all --progress
+	git push --jobs 8 --recurse-submodules=on-demand --all --progress
 
 .PHONY: env.git
 env.git:
@@ -74,7 +74,6 @@ env.git:
 	git config push.default simple
 	git config user.email "${USER}+${PROJ}@${HOST}-${OSNAME}"
 	git config user.name "${USER}"
-	git config core.editor "geany -imnst"
 
 ## Development Sprint
 .PHONY: git.sprint
@@ -85,10 +84,3 @@ git.sprint:
 git.sprintcommit: env.git
 	git submodule foreach "make git.sprintcommit PROJ=${PROJ}"
 	-${SANDWICH_DIR}/sprintcommit.sh ${COMMIT_TIME}
-
-.PHONY: git.xxx
-git.xxx:
-	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
-	git submodule foreach --recursive "${MAKE} env.git"
-	git submodule foreach --recursive git fetch --all --verbose
-	git submodule foreach --recursive "${MAKE} git.sprintcommit COMMIT_TIME=0"
