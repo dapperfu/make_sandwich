@@ -38,11 +38,12 @@ git.heads:
 # See: ```git.mkdevbranch```
 .PHONY: git.develop
 git.develop:
-	git submodule foreach --recursive make git.mkdevbranch PROJ=${PROJ} USER=${USER}
-	-git checkout -b development/${USER}/${DATE_Y_b}
-	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
-	git commit -am "${USER} started ${PROJ} development"
-	git push --set-upstream origin
+	-echo "Hello World"
+	#git submodule foreach --recursive make git.mkdevbranch PROJ=${PROJ} USER=${USER}
+	#-git checkout -b development/${USER}/${DATE_Y_b}
+	#git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
+	#git commit -am "${USER} started ${PROJ} development"
+	#git push --set-upstream origin
 
 # mkdevbranch - Create a development branch for this git repository.
 # 1. Sets the remote push URL to the ssh version. (Tested on GitHub)
@@ -66,7 +67,7 @@ git.sync:
 	git fetch --jobs 8 --recurse-submodules --all --tags --progress
 	git pull --jobs 8 --recurse-submodules --all --tags --progress
 	git push --recurse-submodules=on-demand --all --progress
-	
+
 .PHONY: env.git
 env.git:
 	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
@@ -79,12 +80,12 @@ env.git:
 .PHONY: git.sprint
 git.sprint:
 	${MAKE} git.sprintcommit COMMIT_TIME=300
-	
+
 .PHONY: git.sprintcommit
 git.sprintcommit: env.git
 	git submodule foreach "make git.sprintcommit PROJ=${PROJ}"
 	-${SANDWICH_DIR}/sprintcommit.sh ${COMMIT_TIME}
-	
+
 .PHONY: git.xxx
 git.xxx:
 	git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
