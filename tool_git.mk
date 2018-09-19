@@ -2,6 +2,11 @@
 COMMIT_TIME?=0
 
 ## Targets
+# Fire - Fire
+.PHONY: fire.git
+fire.git:
+	@echo "FIRE!"
+
 # Commit - Git Commit
 #
 # Fetches all remotes before creating commit to avoid issues.
@@ -39,7 +44,7 @@ git.heads:
 .PHONY: git.develop
 git.develop:
 	-echo "Hello World"
-	#git submodule foreach --recursive make git.mkdevbranch PROJ=${PROJ} USER=${USER}
+	#git submodule foreach make git.mkdevbranch PROJ=${PROJ} USER=${USER}
 	#-git checkout -b development/${USER}/${DATE_Y_b}
 	#git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	#git commit -am "${USER} started ${PROJ} development"
