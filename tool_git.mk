@@ -5,7 +5,13 @@ COMMIT_TIME?=0
 # Fire - Fire
 .PHONY: fire.git
 fire.git:
-	@echo "FIRE!"
+	@echo '####### ### ######  #######'
+	@echo '#        #  #     # #'
+	@echo '#        #  #     # #'
+	@echo '#####    #  ######  #####'
+	@echo '#        #  #   #   #'
+	@echo '#        #  #    #  #'
+	@echo '#       ### #     # #######'
 
 # Commit - Git Commit
 #
