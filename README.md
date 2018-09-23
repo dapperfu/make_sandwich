@@ -6,7 +6,7 @@ cp .mk_inc/Makefile ./
 make env
 echo jupyter >> requirements.txt
 echo notebook >> requirements.txt
-git add requirements.txt
+git add Makefile requirements.txt
 git commit -am 'Added submodule.'
 make clean
 make env
