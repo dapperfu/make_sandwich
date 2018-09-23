@@ -1,3 +1,17 @@
+tldr:
+
+```shell
+git submodule add https://github.com/jed-frey/make_sandwich.git .mk_inc
+cp .mk_inc/Makefile ./
+make env
+echo jupyter >> requirements.txt
+echo notebook >> requirements.txt
+git add requirements.txt
+git commit -am 'Added submodule.'
+make clean
+make env
+```
+
 # make_sandwich
 
 ![](https://imgs.xkcd.com/comics/sandwich.png )
