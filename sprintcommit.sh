@@ -14,7 +14,7 @@ echo
 git fetch --all --tags --prune --verbose
 
 # Commit.
-COMMIT_MSG="`whoami`@`hostname`: `date --universal`"
+COMMIT_MSG=${COMMIT_MSG:-"`whoami`@`hostname`: `date --universal`"}
 echo
 echo --- Committing ${COMMIT_MSG}  ---
 echo
