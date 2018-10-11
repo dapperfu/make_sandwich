@@ -27,7 +27,7 @@ git.fire:
 git.commit:
 	git fetch --all --verbose
 	git commit --all
-	git push --all
+	git push upstream
 
 # Heads - List all heads
 #
@@ -45,6 +45,7 @@ git.heads:
 	@git for-each-ref --sort=committerdate refs/tags/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 	@echo --- Remote Commits ---
 	@git for-each-ref --sort=committerdate refs/remotes/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+
 # Develop - Begin development of this project.
 #
 # Start development of this project at this point.
@@ -70,19 +71,18 @@ git.develop:
 # 4. Pushes to the origin.
 
 .PHONY: git.mkdevbranch
-git.mkdevbranch:
+git.mkdevbranch: env.git
 	-git checkout --track -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
 	git commit --allow-empty --all --message "${USER} started ${PROJ} development"
-	git push --set-upstream origin
+	git push --set-upstream upstream
 
 # Sync - Sync project and all submodules with remotes
 #
 # Sync all submodules
 .PHONY: git.sync
-git.sync:
+git.sync: env.git
 	git fetch --jobs 8 --recurse-submodules --all --tags --progress
-	git pull --jobs 8 --recurse-submodules --all --tags --progress
-	git push --recurse-submodules=on-demand --all --progress --porcelain
+	git push --recurse-submodules=on-demand --progress --porcelain upstream
 
 .PHONY: env.git
 env.git:
