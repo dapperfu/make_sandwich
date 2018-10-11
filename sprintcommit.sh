@@ -38,9 +38,21 @@ COMMIT_TIME=${1:-0}
 # Files to add in git.
 ADD_PATHSPEC=${ADD_PATHSPEC:-0}
 
-DEBUG=${DEBUG:-}
+GIT_BIN=${GIT_BIN:-git}
+
+DEBUG=${DEBUG:-0}
+
+
+if [ "${DEBUG}" -nq "0" ]; then
 
 echo ${0}
+
+echo ${COMMIT_TIME}
+echo ${ADD_PATHSPEC}
+echo ${GIT_BIN}
+exit 0
+
+fi
 # The boring stuff of git, automated.
 while [ 1 ];
 do
@@ -48,8 +60,8 @@ do
 echo ----------------
 echo --- Fetching ---
 echo ----------------
-${DEBUG}git fetch --verbose --all --depth=100 --force --recurse-submodules=yes --jobs=8
-${DEBUG}git fetch --verbose --all --force --tags --recurse-submodules=yes --jobs=8
+${GIT_BIN} fetch --verbose --all --depth=100 --force --recurse-submodules=no --jobs=8
+${GIT_BIN} fetch --verbose --all --force --tags --recurse-submodules=no --jobs=8
 echo
 
 # Add.
@@ -58,7 +70,7 @@ echo
 echo ----------------
 echo --- Adding "${ADD_PATHSPEC}" ---
 echo ----------------
-${DEBUG}git add --verbose -- "${ADD_PATHSPEC}"
+${GIT_BIN} add --verbose -- "${ADD_PATHSPEC}"
 fi
 
 # Commit.
@@ -67,7 +79,7 @@ echo
 echo ----------------
 echo --- Committing ${COMMIT_MSG}  ---
 echo ----------------
-${DEBUG}git commit --all --message "${COMMIT_MSG}" --verbose
+${GIT_BIN} commit --all --message "${COMMIT_MSG}" --verbose
 echo
 
 # Push.
@@ -75,7 +87,7 @@ echo
 echo ----------------
 echo --- Pushing ---
 echo ----------------
-${DEBUG}git push --porcelain --tags --follow-tags --signed=false --set-upstream --verbose --progress --recurse-submodules=on-demand --verify --ipv4 origin-ssh
+${GIT_BIN} push --porcelain --tags --follow-tags --signed=false --set-upstream --verbose --progress --recurse-submodules=on-demand --verify --ipv4 origin-ssh
 echo
 
 # Break if asked.
