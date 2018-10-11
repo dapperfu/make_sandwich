@@ -1,6 +1,6 @@
 # Do nothing.
-.PHONY: null
-null:
+.PHONY: _
+_:
 	@$(error No Default Target).
 
 ### Environment Setup.

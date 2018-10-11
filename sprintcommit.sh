@@ -57,7 +57,7 @@ echo
 # Push.
 echo
 echo --- Pushing ---
-git push --porcelain --tags --follow-tags --signed=false --set-upstream --verbose --progress --recurse-submodules=on-demand --verify --ipv4 origin-push
+git push --porcelain --tags --follow-tags --signed=false --set-upstream --verbose --progress --recurse-submodules=on-demand --verify --ipv4 origin-ssh
 echo
 
 # For recursion.

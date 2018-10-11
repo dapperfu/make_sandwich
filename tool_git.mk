@@ -6,8 +6,8 @@ COMMIT_TIME?=0
 #
 # Git actions to do in event of a fire.
 # Life Hack: Run this during fire drills to make sure your setup is working.
-.PHONY: git.fire
-git.fire:
+.PHONY: fire.git
+fire.git:
 	@echo '####### ### ######  #######'
 	@echo '#        #  #     # #'
 	@echo '#        #  #     # #'
@@ -15,22 +15,54 @@ git.fire:
 	@echo '#        #  #   #   #'
 	@echo '#        #  #    #  #'
 	@echo '#       ### #     # #######'
-	${MAKE} git.sprintcommit COMMIT_MSG="FIRE"
+	${MAKE} --makefile=${SANDWICH_DIR}/env.mk git.sprintcommit COMMIT_MSG="FIRE: $(shell date --universal)"
 	@echo 'Please call: 0118 999 881 999 119 725'
 	@sleep 5
 	@echo '3'
 
+# Env - Git Environment
+#
+# Setup the git environment.
+# -
+.PHONY: env.git
+env.git:
+	#
+	# Add remote 'origin-ssh' based on origin. Replace the https clone urls with ssh ones.
+	#
+	-git remote add --fetch --tags --mirror=push origin-ssh  `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
+	#
+	# Set push upstream to origin-ssh
+	#
+	-git push --set-upstream origin-ssh
+	#
+	# Set push default as simple
+	#
+	git config push.default simple
+	#
+	# Configure the git user email based on user, project, machine host and OS variables.
+	# (To narrow down where development actually occured)
+	#
+	git config user.email "${USER}+${PROJ}@${HOST}-${OSNAME}"
+	#
+	# Configure the git user name from USER variable
+	#
+	git config user.name "${USER}"
+	#
+	# Dump the list of remotes so the user can't claim they didn't see them at least once.
+	#
+	git remote -v
 
 # Commit - Git Commit
 #
 # 1. Fetches all remotes before creating commit to avoid issues.
-# 2. Creates a commit with all changed files. Launches EDITOR.
-# 3. Pushes to upstream.
+# 2. Creates a commit with all changed files.
+#	Pro-tip, set EDITOR to something you like.
+# 3. Pushes to origin-ssh.
 .PHONY: git.commit
 git.commit: env.git
 	git fetch --all --verbose
 	git commit --all
-	git push upstream
+	git push origin-ssh
 
 # Heads - List all heads
 #
@@ -88,34 +120,8 @@ git.mkdevbranch: env.git
 .PHONY: git.sync
 git.sync: env.git
 	git fetch --jobs 8 --recurse-submodules --all --tags --progress
-	git push --recurse-submodules=on-demand --progress --porcelain upstream
+	git push --recurse-submodules=on-demand --progress --porcelain origin-push
 
-.PHONY: env.git
-env.git:
-	#
-	# Add remote 'upstream' based on origin. Replace the https clone urls with ssh ones.
-	#
-	-git remote add --fetch --tags --mirror=push upstream `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
-	#
-	# Set the upstream.
-	#
-	-git push --set-upstream upstream
-	#
-	# Set push default as simple
-	#
-	git config push.default simple
-	#
-	# Configure the git user email based on user, project, machine host and OS variables.. (To narrow down where development actually occured)
-	#
-	git config user.email "${USER}+${PROJ}@${HOST}-${OSNAME}"
-	#
-	# Configure the git user name from USER variable
-	#
-	git config user.name "${USER}"
-	#
-	# Dump the list of remotes so the user can't claim they didn't see them at least once.
-	#
-	git remote -v
 
 ## Development Sprint
 .PHONY: git.sprint
