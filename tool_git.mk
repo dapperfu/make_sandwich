@@ -92,17 +92,29 @@ git.sync: env.git
 
 .PHONY: env.git
 env.git:
+	#
 	# Add remote 'upstream' based on origin. Replace the https clone urls with ssh ones.
+	#
 	-git remote add --fetch --tags --mirror=push upstream `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
+	#
 	# Set the upstream.
+	#
 	-git push --set-upstream upstream
+	#
 	# Set push default as simple
+	#
 	git config push.default simple
+	#
 	# Configure the git user email based on user, project, machine host and OS variables.. (To narrow down where development actually occured)
+	#
 	git config user.email "${USER}+${PROJ}@${HOST}-${OSNAME}"
+	#
 	# Configure the git user name from USER variable
+	#
 	git config user.name "${USER}"
+	#
 	# Dump the list of remotes so the user can't claim they didn't see them at least once.
+	#
 	git remote -v
 
 ## Development Sprint
