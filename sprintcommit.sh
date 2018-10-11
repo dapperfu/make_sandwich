@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # sprintcommit.sh [COMMIT_TIME]
 #  Arguments:
 #     COMMIT_TIME: Time (s) to sleep between commits.
@@ -10,7 +10,6 @@
 #  A brute force hammer written by a Mechanical/Industrial Engineer frustrated
 #  at the disproportonate amount of time 'managing' git when we were supposed
 #  to be working.
-#
 
 #MIT License
 #
@@ -36,37 +35,60 @@
 
 # Default commit frequency of 0, only commit once.
 COMMIT_TIME=${1:-0}
+# Files to add in git.
+ADD_PATHSPEC=${ADD_PATHSPEC:-0}
 
-# Until stop.
+DEBUG=${DEBUG:-}
+
+echo ${0}
+# The boring stuff of git, automated.
 while [ 1 ];
 do
 # Fetch.
-echo
-echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
-git fetch --verbose --all --depth=100 --force --prune --prune-tags --recurse-submodules=yes --jobs=8
-git fetch --verbose --all --depth=100 --force --tags --recurse-submodules=yes --jobs=8
+echo ----------------
+echo --- Fetching ---
+echo ----------------
+${DEBUG}git fetch --verbose --all --depth=100 --force --recurse-submodules=yes --jobs=8
+${DEBUG}git fetch --verbose --all --force --tags --recurse-submodules=yes --jobs=8
 echo
 
-# Commit.
-COMMIT_MSG=${COMMIT_MSG:-"`whoami`@`hostname`: `date --universal`"}
+# Add.
+if [ "${ADD_PATHSPEC}" -nq "0" ]; then
 echo
+echo ----------------
+echo --- Adding "${ADD_PATHSPEC}" ---
+echo ----------------
+${DEBUG}git add --verbose -- "${ADD_PATHSPEC}"
+fi
+
+# Commit.
+COMMIT_MSG=${COMMIT_MSG:-"`hostname`: `date --universal`"}
+echo
+echo ----------------
 echo --- Committing ${COMMIT_MSG}  ---
-git commit --all --message "${COMMIT_MSG}" --verbose
+echo ----------------
+${DEBUG}git commit --all --message "${COMMIT_MSG}" --verbose
 echo
 
 # Push.
 echo
+echo ----------------
 echo --- Pushing ---
-git push --porcelain --tags --follow-tags --signed=false --set-upstream --verbose --progress --recurse-submodules=on-demand --verify --ipv4 origin-ssh
+echo ----------------
+${DEBUG}git push --porcelain --tags --follow-tags --signed=false --set-upstream --verbose --progress --recurse-submodules=on-demand --verify --ipv4 origin-ssh
 echo
 
-# For recursion.
+# Break if asked.
 if [ "${COMMIT_TIME}" -eq "0" ]; then
    exit 0
 fi
+
+
 # Sleep.
 echo
 echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
-echo
-sleep 10 # ${COMMIT_TIME}
+echo ---------------------------------------------------------
+echo `fortune`
+echo ---------------------------------------------------------
+sleep ${COMMIT_TIME}
 done
