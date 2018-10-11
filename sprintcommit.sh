@@ -43,14 +43,13 @@ do
 # Fetch.
 echo
 echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
-git commit --all --message "${COMMIT_MSG}"
 echo
 
 # Commit.
 COMMIT_MSG=${COMMIT_MSG:-"`whoami`@`hostname`: `date --universal`"}
 echo
 echo --- Committing ${COMMIT_MSG}  ---
-git commit -
+git commit --all --message "${COMMIT_MSG}"
 echo
 
 # Push.
