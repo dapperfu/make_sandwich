@@ -3,6 +3,9 @@ COMMIT_TIME?=0
 
 ## Targets
 # Fire - Fire
+#
+# In the event of a fire.
+#
 .PHONY: git.fire
 git.fire:
 	@echo '####### ### ######  #######'
@@ -20,11 +23,11 @@ git.fire:
 
 # Commit - Git Commit
 #
-# Fetches all remotes before creating commit to avoid issues.
-# Creates a commit. Launches EDITOR.
-# Pushes to all remotes.
+# 1. Fetches all remotes before creating commit to avoid issues.
+# 2. Creates a commit with all changed files. Launches EDITOR.
+# 3. Pushes to upstream.
 .PHONY: git.commit
-git.commit:
+git.commit: env.git
 	git fetch --all --verbose
 	git commit --all
 	git push upstream
@@ -35,6 +38,11 @@ git.commit:
 # - Local (refs/heads)
 # - Tags (/refs/tags)
 # - Remote (/refs/remotes/)
+#
+# Use cases:
+# - See who is actually working.
+# - Remember what branch you were working on on that one machine last weekend when you fixed that one bug.
+# - Figure out what release your company is on vs where you're working.
 .PHONY: git.heads
 git.heads:
 	@echo --- Project: "${PROJ}" ---
@@ -49,18 +57,16 @@ git.heads:
 # Develop - Begin development of this project.
 #
 # Start development of this project at this point.
-# Creates a development branch on all submodules.
+# Creates a development branch on all submodules with this project name.
 # Creates a development branch for this project.
 #
 # See: ```git.mkdevbranch```
 .PHONY: git.develop
-git.develop:
-	-echo "Hello World"
-	#git submodule foreach make git.mkdevbranch PROJ=${PROJ} USER=${USER}
-	#-git checkout -b development/${USER}/${DATE_Y_b}
-	#git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
-	#git commit -am "${USER} started ${PROJ} development"
-	#git push --set-upstream origin
+git.develop: git.mkdevbranch
+	# For each submodule also make a development branch.
+	git submodule foreach make git.mkdevbranch PROJ=${PROJ} USER=${USER} BADHACK="/submodule"
+	        git commit --allow-empty --all --message "${USER} started ${PROJ} development"
+	git commit -am "${USER} started ${PROJ} development"
 
 # mkdevbranch - Create a development branch for this git repository.
 # 1. Sets the remote push URL to the ssh version. (Tested on GitHub)
@@ -72,7 +78,7 @@ git.develop:
 
 .PHONY: git.mkdevbranch
 git.mkdevbranch: env.git
-	-git checkout --track -b development/${USER}/submodule/${PROJ}/${DATE_Y_b}
+	-git checkout --track -b development/${USER}${BADHACK}/${PROJ}/${DATE_Y_b}
 	git commit --allow-empty --all --message "${USER} started ${PROJ} development"
 	git push --set-upstream upstream
 
@@ -86,10 +92,15 @@ git.sync: env.git
 
 .PHONY: env.git
 env.git:
+	# Add remote 'upstream' based on origin. Replace the https clone urls with ssh ones.
 	-git remote add --fetch --tags --mirror=push upstream `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
+	# Set push default.
 	git config push.default simple
+	# Configure the git user email based on user, project, machine host and OS variables.. (To narrow down where development actually occured)
 	git config user.email "${USER}+${PROJ}@${HOST}-${OSNAME}"
+	# Configure the git user name from USER variable
 	git config user.name "${USER}"
+	# Dump the list of remotes so the user can't claim they didn't see them at least once.
 	git remote -v
 
 ## Development Sprint

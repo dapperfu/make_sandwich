@@ -5,11 +5,17 @@ null:
 
 ### Environment Setup.
 
-## Variables
+## Static Variables
+# These should never be overwritable. Consider them ground truth.
 MK_DIR:=$(realpath $(dir $(firstword ${MAKEFILE_LIST})))
 SANDWICH_DIR:=$(realpath $(dir $(lastword ${MAKEFILE_LIST})))
 
-# Project name
+## Configurable Variables
+# Project name.
+#	Can be overwritten if folder name doesn't match project name. eg:
+#	- Submodules.
+#	- Mnemonics.
+#	- Stubborn management and legacy product support.
 PROJ?=$(notdir ${MK_DIR})
 
 ## Targets
@@ -19,10 +25,13 @@ clean:
 	@echo --- Cleaning ${PROJ} ---
 	# If it's not in Git, it doesn't exist.
 	@git clean -xfd
-	
+
 .PHONY: env
 env: $(addprefix env.,${ENVS})
-	
+
+.PHONY: fire
+fire: $(addprefix fire.,${FIREcf})
+
 # Debug
 .PHONY: debug
 debug: debug.host debug.os
