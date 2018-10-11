@@ -42,8 +42,8 @@ while [ 1 ];
 do
 # Fetch.
 echo
-git commit --all --message "${COMMIT_MSG}"
 echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
+git commit --all --message "${COMMIT_MSG}"
 echo
 
 # Commit.
