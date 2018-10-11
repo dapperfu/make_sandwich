@@ -43,15 +43,15 @@ do
 # Fetch.
 echo
 echo --- Sleeping until `date -d "+${COMMIT_TIME} second"` ---
-git fetch --all --depth=100 --force --prune --prune-tags --recurse-submodules=yes --jobs=8
-git fetch --all --depth=100 --force --tags --recurse-submodules=yes --jobs=8
+git fetch --verbose --all --depth=100 --force --prune --prune-tags --recurse-submodules=yes --jobs=8
+git fetch --verbose --all --depth=100 --force --tags --recurse-submodules=yes --jobs=8
 echo
 
 # Commit.
 COMMIT_MSG=${COMMIT_MSG:-"`whoami`@`hostname`: `date --universal`"}
 echo
 echo --- Committing ${COMMIT_MSG}  ---
-git commit --all --message "${COMMIT_MSG}"
+git commit --all --message "${COMMIT_MSG}" --verbose
 echo
 
 # Push.
