@@ -33,25 +33,37 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #SOFTWARE.
 
-# Default commit frequency of 0, only commit once.
+### Variables
+## Configurable Variables
+#  Default: 0
+#
+
 COMMIT_TIME=${1:-0}
 # Files to add in git.
 ADD_PATHSPEC=${ADD_PATHSPEC:-0}
-
+# Recurse into git submodules.
+#  Default: yes
+SUBMODULES=${SUBMODULES:-yes}
+# Binary to use for git.
+#  Use 'echo' to debug.
 GIT_BIN=${GIT_BIN:-git}
-
+# Print off variables and exit.
 DEBUG=${DEBUG:-0}
 
-
-if [ "${DEBUG}" -nq "0" ]; then
-
-echo ${0}
-
-echo ${COMMIT_TIME}
-echo ${ADD_PATHSPEC}
-echo ${GIT_BIN}
+## Ground Truth Variables
+export SPRINT_SCRIPT=`realpath ${0}`
+export SPRINT_DIRECTORY=`dirname ${SPRINT_SCRIPT}`
+export SPRINT_T0=`date --universal`
+## Script Body
+# If DEBUG is not equal to 0.
+if [ "${DEBUG}" -ne "0" ]; then
+# Print off all of the variables.
+echo \${SPRINT_SCRIPT}=${SPRINT_SCRIPT}
+echo \${SPRINT_DIRECTORY}=${SPRINT_DIRECTORY}
+echo \$COMMIT_TIME=${COMMIT_TIME}
+echo \$ADD_PATHSPEC=${ADD_PATHSPEC}
+echo \$GIT_BIN=${GIT_BIN}
 exit 0
-
 fi
 # The boring stuff of git, automated.
 while [ 1 ];
@@ -65,7 +77,7 @@ ${GIT_BIN} fetch --verbose --all --force --tags --recurse-submodules=no --jobs=8
 echo
 
 # Add.
-if [ "${ADD_PATHSPEC}" -nq "0" ]; then
+if [ "${ADD_PATHSPEC}" -ne "0" ]; then
 echo
 echo ----------------
 echo --- Adding "${ADD_PATHSPEC}" ---
