@@ -2,10 +2,10 @@
 COMMIT_TIME?=0
 
 ## Targets
-# Fire - Fire
+# Fire - Git Fire
 #
-# In the event of a fire.
-#
+# Git actions to do in event of a fire.
+# Life Hack: Run this during fire drills to make sure your setup is working.
 .PHONY: git.fire
 git.fire:
 	@echo '####### ### ######  #######'
@@ -65,7 +65,7 @@ git.heads:
 git.develop: git.mkdevbranch
 	# For each submodule also make a development branch.
 	git submodule foreach make git.mkdevbranch PROJ=${PROJ} USER=${USER} BADHACK="/submodule"
-	        git commit --allow-empty --all --message "${USER} started ${PROJ} development"
+	git commit --allow-empty --all --message "${USER} started ${PROJ} development"
 	git commit -am "${USER} started ${PROJ} development"
 
 # mkdevbranch - Create a development branch for this git repository.
@@ -76,11 +76,11 @@ git.develop: git.mkdevbranch
 #		${USER} started ${PROJ} development
 # 4. Pushes to the origin.
 
+BADHACK?=
 .PHONY: git.mkdevbranch
 git.mkdevbranch: env.git
 	-git checkout --track -b development/${USER}${BADHACK}/${PROJ}/${DATE_Y_b}
 	git commit --allow-empty --all --message "${USER} started ${PROJ} development"
-	git push --set-upstream upstream
 
 # Sync - Sync project and all submodules with remotes
 #
@@ -94,7 +94,9 @@ git.sync: env.git
 env.git:
 	# Add remote 'upstream' based on origin. Replace the https clone urls with ssh ones.
 	-git remote add --fetch --tags --mirror=push upstream `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
-	# Set push default.
+	# Set the upstream.
+	-git push --set-upstream upstream
+	# Set push default as simple
 	git config push.default simple
 	# Configure the git user email based on user, project, machine host and OS variables.. (To narrow down where development actually occured)
 	git config user.email "${USER}+${PROJ}@${HOST}-${OSNAME}"
@@ -110,5 +112,5 @@ git.sprint:
 
 .PHONY: git.sprintcommit
 git.sprintcommit: env.git
-	git submodule foreach "make git.sprintcommit PROJ=${PROJ}"
-	-${SANDWICH_DIR}/sprintcommit.sh ${COMMIT_TIME}
+	-echo ${PROJ}
+	git submodule foreach "make git.sprintcommit PROJ=${PROJ} COMMIT_TIME=0"

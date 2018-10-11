@@ -6,4 +6,4 @@ ENVS:=python git
 
 ## make_sandwich includes
 # https://github.com/jed-frey/make_sandwich
-include /env.mk
+include .mk_inc/env.mk

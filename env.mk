@@ -30,7 +30,10 @@ clean:
 env: $(addprefix env.,${ENVS})
 
 .PHONY: fire
-fire: $(addprefix fire.,${FIREcf})
+fire: $(addprefix fire.,${FIRE})
+
+.PHONY: fire
+fire: $(addprefix fire.,${FIRE})
 
 # Debug
 .PHONY: debug
