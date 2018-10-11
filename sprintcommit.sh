@@ -15,6 +15,7 @@
 #
 #Copyright (c) 2018 Jed Frey
 #
+#
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
 #in the Software without restriction, including without limitation the rights
@@ -35,20 +36,14 @@
 
 ### Variables
 ## Configurable Variables
-#  Default: 0
-#
-
 COMMIT_TIME=${1:-0}
-# Files to add in git.
-ADD_PATHSPEC=${ADD_PATHSPEC:-0}
-# Recurse into git submodules.
-#  Default: yes
-SUBMODULES=${SUBMODULES:-yes}
 # Binary to use for git.
 #  Use 'echo' to debug.
 GIT_BIN=${GIT_BIN:-git}
 # Print off variables and exit.
 DEBUG=${DEBUG:-0}
+# Files to add to git during development.
+ADD_PATHSPEC=${ADD_PATHSPEC:-}
 
 ## Ground Truth Variables
 export SPRINT_SCRIPT=`realpath ${0}`
@@ -72,17 +67,28 @@ do
 echo ----------------
 echo --- Fetching ---
 echo ----------------
-${GIT_BIN} fetch --verbose --all --depth=100 --force --recurse-submodules=no --jobs=8
-${GIT_BIN} fetch --verbose --all --force --tags --recurse-submodules=no --jobs=8
+${GIT_BIN} fetch \
+   --verbose \
+   --all \
+   --depth=100 \
+   --force \
+   --tags \
+   --recurse-submodules=no \
+   --jobs=8
 echo
 
 # Add.
-if [ "${ADD_PATHSPEC}" -ne "0" ]; then
+if [ "${ADD_PATHSPEC}" != "" ]; then
 echo
 echo ----------------
-echo --- Adding "${ADD_PATHSPEC}" ---
+echo --- Adding "${ADD_PATHSPEC}"  ---
 echo ----------------
-${GIT_BIN} add --verbose -- "${ADD_PATHSPEC}"
+bak=${GLOBIGNORE}
+export GLOBIGNORE="*"
+for PATHSPEC in ${ADD_PATHSPEC}; do
+${GIT_BIN} add --verbose -- "${PATHSPEC}"
+done
+export GLOBIGNORE=${bak}
 fi
 
 # Commit.
@@ -91,7 +97,10 @@ echo
 echo ----------------
 echo --- Committing ${COMMIT_MSG}  ---
 echo ----------------
-${GIT_BIN} commit --all --message "${COMMIT_MSG}" --verbose
+${GIT_BIN} commit \
+   --all \
+   --message "${COMMIT_MSG}"\
+   --verbose
 echo
 
 # Push.
@@ -99,11 +108,21 @@ echo
 echo ----------------
 echo --- Pushing ---
 echo ----------------
-${GIT_BIN} push --porcelain --tags --follow-tags --signed=false --set-upstream --verbose --progress --recurse-submodules=on-demand --verify --ipv4 origin-ssh
+${GIT_BIN} push \
+   --tags \
+   --follow-tags \
+   --signed=false \
+   --set-upstream \
+   --verbose \
+   --progress \
+   --recurse-submodules=on-demand \
+   --verify \
+   --ipv4 \
+   origin-ssh
 echo
 
 # Break if asked.
-if [ "${COMMIT_TIME}" -eq "0" ]; then
+if [ "${COMMIT_TIME}" == "0" ]; then
    exit 0
 fi
 
