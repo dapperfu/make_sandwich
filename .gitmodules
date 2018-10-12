@@ -1,3 +1,6 @@
 [submodule "sprint_commit"]
 	path = sprint_commit
 	url = https://github.com/jed-frey/sprint_commit.git
+[submodule "sprintcommit"]
+	path = sprintcommit
+	url = https://github.com/jed-frey/sprintcommit.git
