@@ -9,7 +9,7 @@ _:
 # These should never be overwritable. Consider them ground truth.
 MK_DIR:=$(realpath $(dir $(firstword ${MAKEFILE_LIST})))
 SANDWICH_DIR:=$(realpath $(dir $(lastword ${MAKEFILE_LIST})))
-SANDWICH_VERSION:=$(shell python setup.py --version)
+SANDWICH_VERSION:=$(shell python -c "import versioneer; print(versioneer.get_version())")
 
 ## Configurable Variables
 # Project name.
