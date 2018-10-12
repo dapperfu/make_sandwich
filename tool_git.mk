@@ -120,7 +120,7 @@ git.mkdevbranch: env.git
 .PHONY: git.sync
 git.sync: env.git
 	git fetch --jobs 8 --recurse-submodules --all --tags --progress
-	git push --recurse-submodules=on-demand --progress --porcelain origin-push
+	git push --recurse-submodules=on-demand --progress --porcelain origin-ssh
 
 
 ## Development Sprint
