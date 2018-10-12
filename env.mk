@@ -31,16 +31,16 @@ clean:
 env: $(addprefix env.,${ENVS})
 
 .PHONY: fire
-fire: $(addprefix fire.,${FIRE})
+fire: $(addprefix fire.,${FIRES})
 
-.PHONY: debug
-debug: $(addprefix debug.,${FIRE})
-
+DEBUGS+=host
+DEBUGS+=os
 # Debug
 .PHONY: debug
-debug: debug.host debug.os
+debug: $(addprefix debug.,${DEBUGS})
 	@$(info $${MK_DIR}='${MK_DIR}')
 	@$(info $${SANDWICH_DIR}='${SANDWICH_DIR}')
+	@$(info $${SANDWICH_VERSION}='${SANDWICH_VERSION}')
 	@$(info $${PROJ}='${PROJ}')
 	@$(info $${USER}='${USER}')
 
