@@ -28,8 +28,9 @@ fire.git:
 env.git:
 	#
 	# Add remote 'origin-ssh' based on origin. Replace the https clone urls with ssh ones.
-	#
-	-git remote add --fetch --tags --mirror=push origin-ssh  `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
+	# git remote set-url --push origin
+	# -git remote add --fetch --tags --mirror=push origin-ssh  `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
+	-git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	#
 	# Set push upstream to origin-ssh
 	#

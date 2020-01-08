@@ -1,1 +1,0 @@
-sprintcommit/sprintcommit.sh
