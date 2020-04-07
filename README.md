@@ -1,22 +1,18 @@
 tldr:
 
 ```shell
-git submodule add https://github.com/jed-frey/make_sandwich.git .mk_inc
-cp .mk_inc/Makefile ./
-make env
-echo jupyter >> requirements.txt
-echo notebook >> requirements.txt
-git add Makefile requirements.txt
-git commit -am 'Added submodule.'
-make clean
-make env
+ms env
+
+ms env.python
+ms env.go
+ms env.git
 ```
 
-# make_sandwich
+# make_sandwich 2.0: go edition
 
 ![](https://imgs.xkcd.com/comics/sandwich.png )
 
-Tool chest for [GNU Make](https://www.gnu.org/software/make/) targets.
+Tool chest for development. ~~[GNU Make](https://www.gnu.org/software/make/) targets~~.
 
 # Usage
 

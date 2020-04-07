@@ -32,10 +32,6 @@ env.git:
 	# -git remote add --fetch --tags --mirror=push origin-ssh  `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	-git remote set-url --push origin `git remote get-url origin | sed "s/https:\/\//git@/" | sed "s/.com\//.com:/"`
 	#
-	# Set push upstream to origin-ssh
-	#
-	-git push --set-upstream origin-ssh
-	#
 	# Set push default as simple
 	#
 	git config push.default simple
@@ -63,7 +59,7 @@ env.git:
 git.commit: env.git
 	git fetch --all --verbose
 	git commit --all
-	git push origin-ssh
+	git push origin
 
 # Heads - List all heads
 #
