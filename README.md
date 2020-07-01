@@ -1,7 +1,7 @@
 tldr:
 
 ```shell
-git submodule add https://github.com/jed-frey/make_sandwich.git .mk_inc
+git submodule add https://github.com/dapperfu/make_sandwich.git .mk_inc
 cp .mk_inc/Makefile ./
 make env
 echo jupyter >> requirements.txt
@@ -22,7 +22,7 @@ Tool chest for [GNU Make](https://www.gnu.org/software/make/) targets.
 
 Add project as submodule to project and copy template Makefile to the project directory:
 
-    git submodule add https://github.com/jed-frey/make_sandwich.git .mk_inc
+    git submodule add https://github.com/dapperfu/make_sandwich.git .mk_inc
     cp .mk_inc/Makefile ./
 
 By default, intentionally, there is no target. Running make after the above commands should result in a message that there is no default target.
